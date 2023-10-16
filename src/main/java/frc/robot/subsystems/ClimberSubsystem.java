@@ -4,12 +4,16 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
- 
-  
+ private final Spark elevatorMotor = new Spark(2);
+ private final DigitalInput topLimitswitch = new DigitalInput(1);
+ private final DigitalInput bottomLimitswitch = new DigitalInput(0);
+
   public ClimberSubsystem() {}
 
   @Override
