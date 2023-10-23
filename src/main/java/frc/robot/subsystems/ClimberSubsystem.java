@@ -13,6 +13,7 @@ public class ClimberSubsystem extends SubsystemBase {
  private final Spark elevatorMotor = new Spark(2);
  private final DigitalInput topLimitSwitch = new DigitalInput(1);
  private final DigitalInput bottomLimitSwitch = new DigitalInput(0);
+ private static ClimberSubsystem instance = null;
 
 /*   public void [functionName](args){
   ajf;sldkfjasldkjf
@@ -50,12 +51,18 @@ public boolean topSwitchState(){
 } 
 
 
+  // Function returns the climberSubsystem instance
+  public static ClimberSubsystem getInstance(){
+    if(instance == null) {
+      instance = new ClimberSubsystem();
+    }
+    return instance;
+  }
+
   public void periodic() {
     // This method will be called once per scheduler run
     System.out.print(bottomLimitSwitch.get());
     System.out.println(topLimitSwitch.get());
     
   }
-
-
 }
