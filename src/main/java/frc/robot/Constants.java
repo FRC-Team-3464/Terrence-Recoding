@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -14,7 +18,12 @@ package frc.robot;
  */
 public final class Constants {
   public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
+    public static final Joystick auxJoystick = new Joystick(0);
+    public static final JoystickButton button1 = new JoystickButton (auxJoystick, 1);
+    public static final POVButton povUp = new POVButton(auxJoystick, 0);
+    public static final POVButton povDown = new POVButton(auxJoystick, 180);
+    public static final JoystickButton button2 = new JoystickButton(auxJoystick, 2);
+    public static final JoystickButton button3 = new JoystickButton(auxJoystick,3);
     
   }
 }

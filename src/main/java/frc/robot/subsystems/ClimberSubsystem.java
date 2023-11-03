@@ -10,18 +10,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
- private final Spark elevatorMotor = new Spark(2);
+  private final Spark elevatorMotor = new Spark(2);
  private final DigitalInput topLimitSwitch = new DigitalInput(1);
  private final DigitalInput bottomLimitSwitch = new DigitalInput(0);
  private static ClimberSubsystem instance = null;
 
-/*   public void [functionName](args){
-  ajf;sldkfjasldkjf
-}
-*/
-// Public void elevatorUP
 
-  public ClimberSubsystem() {}
+public ClimberSubsystem() {}
 
 // Method to move the elevator up if it doesn't hit switch.
 public void elevatorUp(){
@@ -52,12 +47,12 @@ public boolean topSwitchState(){
 
 
   // Function returns the climberSubsystem instance
-  public static ClimberSubsystem getInstance(){
-    if(instance == null) {
-      instance = new ClimberSubsystem();
-    }
-    return instance;
-  }
+  // public static ClimberSubsystem getInstance(){
+  //   if(instance == null) {
+  //     instance = new ClimberSubsystem();
+  //   }
+  //   return instance;
+  // }
 
   public void periodic() {
     // This method will be called once per scheduler run

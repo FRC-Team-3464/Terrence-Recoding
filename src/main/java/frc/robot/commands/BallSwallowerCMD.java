@@ -5,28 +5,33 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class ClimberRetractCMD extends CommandBase {
-  private final ClimberSubsystem climberSub;
+public class BallSwallowerCMD extends CommandBase {
+  /** Creates a new BallSwallower. */
 
-  /** Creates a new ClimberRetractCMD. */
-  public ClimberRetractCMD(ClimberSubsystem climberSub) {
-    this.climberSub = climberSub;
+  private IntakeSubsystem intakeSub;
+
+  public BallSwallowerCMD(IntakeSubsystem intakeSub) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climberSub);
+ this.intakeSub = intakeSub;
+ addRequirements(intakeSub);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    intakeSub.runIntakes();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void execute() {
-    climberSub.elevatorDown();
+  public void end(boolean interrupted) {
+    intakeSub.stopIntakes(); 
   }
 
   // Returns true when the command should end.
