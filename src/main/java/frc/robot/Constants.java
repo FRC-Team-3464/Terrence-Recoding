@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import java.lang.ModuleLayer.Controller;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
@@ -25,5 +28,6 @@ public final class Constants {
     public static final JoystickButton button2 = new JoystickButton(auxJoystick, 2);
     public static final JoystickButton button3 = new JoystickButton(auxJoystick,3);
     
+    public static final XboxController xboxControlluh = new XboxController(2);
   }
 }
