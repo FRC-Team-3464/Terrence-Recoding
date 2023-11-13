@@ -14,7 +14,7 @@ public class ArcadeDriveCMD extends CommandBase {
 
   // Create drivesystem object
   private final DriveTrainSubsystem driveSub;
-  private final XboxController controller = Constants.OperatorConstants.xboxControlluh;
+  private final XboxController controller = Constants.OperatorConstants.xboxController;
 
 
   public ArcadeDriveCMD(DriveTrainSubsystem drive) {

@@ -27,11 +27,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  // Creates all our subsystem that the robot will be using.
   private final ClimberSubsystem climberSub = new ClimberSubsystem();
   private final IntakeSubsystem intakeSub = new IntakeSubsystem();
   private final ShooterSubsystem shooterSub = new ShooterSubsystem(); 
   private final DriveTrainSubsystem driveSub = new DriveTrainSubsystem();
 
+  // Creates all the commands that use the subsystems to do their functions. 
   private final ClimberMoveCMD pull = new ClimberMoveCMD(false);  
   private final ClimberMoveCMD climb = new ClimberMoveCMD(true);
   private final BallSpitterCMD spitBalls = new BallSpitterCMD(intakeSub, shooterSub);
@@ -46,28 +48,13 @@ public class RobotContainer {
     configureBindings();
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    // Constants.OperatorConstants.povUp.whileTrue(climb);
-    // Constants.OperatorConstants.povDown.whileTrue(pull);
-
-    CommandScheduler.getInstance().setDefaultCommand(driveSub, arcadeDrive);
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
+  // Default command: this command is called by default
+   CommandScheduler.getInstance().setDefaultCommand(driveSub, arcadeDrive);
 
    Constants.OperatorConstants.button2.whileTrue(spitBalls);
    Constants.OperatorConstants.button3.whileTrue(swallowBalls);
    Constants.OperatorConstants.button1.whileTrue(ripOutBalls);
-
 
   }
 

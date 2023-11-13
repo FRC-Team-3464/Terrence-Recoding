@@ -28,6 +28,6 @@ public final class Constants {
     public static final JoystickButton button2 = new JoystickButton(auxJoystick, 2);
     public static final JoystickButton button3 = new JoystickButton(auxJoystick,3);
     
-    public static final XboxController xboxControlluh = new XboxController(2);
+    public static final XboxController xboxController = new XboxController(2);
   }
 }
