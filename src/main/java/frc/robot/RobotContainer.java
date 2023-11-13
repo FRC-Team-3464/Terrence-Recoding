@@ -32,7 +32,7 @@ public class RobotContainer {
   private final BallSpitterCMD spitBalls = new BallSpitterCMD(intakeSub, shooterSub);
   private final BallSwallowerCMD swallowBalls = new BallSwallowerCMD(intakeSub);
   private final RunBottomIntakeCMD runBottom = new RunBottomIntakeCMD(intakeSub);
-  private final ShootCMD ripOutBalls = new ShootCMD(shooterSub);
+  private final ShootCMD ripOutBalls = new ShootCMD(shooterSub, intakeSub);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
