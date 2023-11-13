@@ -4,7 +4,9 @@
 
 package frc.robot.subsystems;
 
+
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -20,7 +22,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
     leftBack = new CANSparkMax(6, MotorType.kBrushless),
     rightFront = new CANSparkMax(7, MotorType.kBrushless),
     rightBack = new CANSparkMax(8, MotorType.kBrushless);
-  
+
+  // Define our encoders
+  private final RelativeEncoder leftFrontEncoder = leftFront.getEncoder();
+  private final RelativeEncoder rightFrontEncoder = rightFront.getEncoder();
   // Creates a drive that goes forward, back, and rotates left and right. 
   public DifferentialDrive drive = new DifferentialDrive(leftFront, rightFront);
 
@@ -49,11 +54,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   // Gets how much the left motor has turned
   public double getLeft(){
-    return leftFront.get();
+    return leftFrontEncoder.getPosition();
   }
 
   public double getRight(){
-    return rightFront.get();
+    return rightFrontEncoder.getPosition();
   }
 
   // Set the motors to be either brake or coast mode
