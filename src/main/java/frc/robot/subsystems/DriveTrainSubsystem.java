@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrainSubsystem extends SubsystemBase {
@@ -20,30 +21,33 @@ public class DriveTrainSubsystem extends SubsystemBase {
     rightFront = new CANSparkMax(7, MotorType.kBrushless),
     rightBack = new CANSparkMax(8, MotorType.kBrushless);
   
+  // Creates a drive that goes forward, back, and rotates left and right. 
   public DifferentialDrive drive = new DifferentialDrive(leftFront, rightFront);
-  
 
   public DriveTrainSubsystem() {
+    // Invert the left motor. 
     leftFront.setInverted(true);
-  }
-//yippie!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
 
-
-  public void arcadeDrive(double speed, double rotation) {
-
-    drive.arcadeDrive(speed, rotation);
-    
+    // Set the back motors to follow the front ones. 
     leftBack.follow(leftFront);
     rightBack.follow(rightFront);
+
+    // Set all the motors to be brake mode. 
+    enableMotors(true);
+
   }
 
-//help me ben is holding me hostage
-//me too
+  // Create the fuction to enable arcade drive. 
+  public void arcadeDrive(double speed, double rotation) {
+    drive.arcadeDrive(speed, rotation);
+  }
 
   public void stopMotors() {
-    arcadeDrive(0, 0);
+   drive.stopMotor(); // Stop the drive
+    // arcadeDrive(0, 0);
   }
 
+  // Gets how much the left motor has turned
   public double getLeft(){
     return leftFront.get();
   }
@@ -52,15 +56,16 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return rightFront.get();
   }
 
-
-  public void enableMotors(boolean on) {
+  // Set the motors to be either brake or coast mode
+  public void enableMotors(boolean isBrake) {
     IdleMode mode;
-    if (on) {
+    if (isBrake) {
       mode = IdleMode.kBrake;
     } else {
       mode = IdleMode.kCoast;
     }
     
+    // Set all the motors to be on that mode. 
     leftFront.setIdleMode(mode);
     leftBack.setIdleMode(mode);
     rightFront.setIdleMode(mode);
@@ -71,6 +76,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    // Put how much the left motor has rotated on the Smartdashboard. 
+    SmartDashboard.putNumber("Left Motor Encoder", getLeft());
+    SmartDashboard.putNumber("Right Motor Encoder", getRight());
+
   }
 }
