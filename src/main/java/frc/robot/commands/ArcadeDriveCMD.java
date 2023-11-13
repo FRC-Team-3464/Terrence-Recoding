@@ -12,12 +12,13 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 public class ArcadeDriveCMD extends CommandBase {
   /** Creates a new ArcadeDriveCMD. */
 
+  // Create drivesystem object
   private final DriveTrainSubsystem driveSub;
   private final XboxController controller = Constants.OperatorConstants.xboxControlluh;
 
 
   public ArcadeDriveCMD(DriveTrainSubsystem drive) {
-    // Use addRequirements() here to declare subsystem dependencies.
+    // AddRequirements allows us to pass the drivetrain subsystem around different commands. 
     driveSub = drive;
     addRequirements(driveSub);
   }
@@ -29,17 +30,14 @@ public class ArcadeDriveCMD extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    System.out.println("Ben is holding us hostage "); // he doesn't even know how to code, let alone teach others
-  
-    System.out.println(controller.getLeftY());
-    System.out.println(controller.getRightX());
-    // driveSub.arcadeDrive(controller.getLeftY()*.69, controller.getRightX()*.69);
+    driveSub.arcadeDrive(controller.getLeftY()*.69, controller.getRightX()*.69);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    driveSub.stopMotors();
+  }
 
   // Returns true when the command should end.
   @Override
