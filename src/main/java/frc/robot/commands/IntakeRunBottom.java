@@ -4,20 +4,18 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ClimberSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.IntakeSubsystem;
 
-/** An example command that uses an example subsystem. */
-public class ClimberMoveCMD extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+public class IntakeRunBottom extends CommandBase {
+  /** Creates a new RunBottomIntakeCMD. */
 
- 
-private ClimberSubsystem climberSub;
-   //get our instance of climberSub 
-  private boolean climberDirection;
+  private IntakeSubsystem intakeSub;
 
-  public ClimberMoveCMD(Boolean direction) {
-    climberDirection = direction;
+  public IntakeRunBottom(IntakeSubsystem intakeSub) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.intakeSub = intakeSub;
+    addRequirements(intakeSub);
   }
 
   // Called when the command is initially scheduled.
@@ -27,16 +25,14 @@ private ClimberSubsystem climberSub;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(climberDirection == true){
-      climberSub.elevatorUp();
-    }else{
-      climberSub.elevatorDown();
-    }
+    intakeSub.runIntakeBottom();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    intakeSub.stopIntakes();
+  }
 
   // Returns true when the command should end.
   @Override
@@ -44,4 +40,3 @@ private ClimberSubsystem climberSub;
     return false;
   }
 }
-

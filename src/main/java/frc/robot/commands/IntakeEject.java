@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class BallSpitterCMD extends CommandBase {
+public class IntakeEject extends CommandBase {
   /** Creates a new BallSpitterCMD. */
 
   private final IntakeSubsystem intakeSub;
 
 private final ShooterSubsystem shooterSub;
 
-  public BallSpitterCMD(IntakeSubsystem intakesub, ShooterSubsystem shooterSub) {
+  public IntakeEject(IntakeSubsystem intakesub, ShooterSubsystem shooterSub) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSub = intakesub;
     addRequirements(intakesub);

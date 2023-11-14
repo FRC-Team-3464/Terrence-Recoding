@@ -4,18 +4,22 @@
 
 package frc.robot.commands;
 
+import frc.robot.subsystems.ClimberSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
 
-public class BallSwallowerCMD extends CommandBase {
-  /** Creates a new BallSwallower. */
+/** An example command that uses an example subsystem. */
+public class ClimberRunUpDown extends CommandBase {
+    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-  private IntakeSubsystem intakeSub;
+ 
+  private ClimberSubsystem climberSub;
+  private boolean climberDirection;
 
-  public BallSwallowerCMD(IntakeSubsystem intakeSub) {
-    // Use addRequirements() here to declare subsystem dependencies.
- this.intakeSub = intakeSub;
- addRequirements(intakeSub);
+  public ClimberRunUpDown(Boolean direction, ClimberSubsystem climberSub) {
+    this.climberSub = climberSub;
+    climberDirection = direction;
+    
+    addRequirements(climberSub);
   }
 
   // Called when the command is initially scheduled.
@@ -25,13 +29,17 @@ public class BallSwallowerCMD extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSub.runIntakes();
+    if(climberDirection == true){
+      climberSub.elevatorUp();
+    }else{
+      climberSub.elevatorDown();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeSub.stopIntakes(); 
+    climberSub.stopMotor();
   }
 
   // Returns true when the command should end.
@@ -40,3 +48,4 @@ public class BallSwallowerCMD extends CommandBase {
     return false;
   }
 }
+

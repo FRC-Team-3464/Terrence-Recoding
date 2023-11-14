@@ -6,10 +6,11 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArcadeDriveCMD;
-import frc.robot.commands.BallSpitterCMD;
-import frc.robot.commands.BallSwallowerCMD;
-import frc.robot.commands.ClimberMoveCMD;
-import frc.robot.commands.RunBottomIntakeCMD;
+import frc.robot.commands.IntakeRunBottom;
+import frc.robot.commands.IntakeRunBoth;
+import frc.robot.commands.ClimberRunUpDown;
+import frc.robot.commands.IntakeEject;
+import frc.robot.commands.IntakeRunBottom;
 import frc.robot.commands.ShootCMD;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -34,12 +35,12 @@ public class RobotContainer {
   private final DriveTrainSubsystem driveSub = new DriveTrainSubsystem();
 
   // Creates all the commands that use the subsystems to do their functions. 
-  private final ClimberMoveCMD pull = new ClimberMoveCMD(false);  
-  private final ClimberMoveCMD climb = new ClimberMoveCMD(true);
-  private final BallSpitterCMD spitBalls = new BallSpitterCMD(intakeSub, shooterSub);
-  private final BallSwallowerCMD swallowBalls = new BallSwallowerCMD(intakeSub);
-  private final RunBottomIntakeCMD runBottom = new RunBottomIntakeCMD(intakeSub);
-  private final ShootCMD ripOutBalls = new ShootCMD(shooterSub);
+  private final ClimberRunUpDown pull = new ClimberRunUpDown(false, climberSub);  
+  private final ClimberRunUpDown climb = new ClimberRunUpDown(true, climberSub);
+  private final IntakeEject ejectCargo = new IntakeEject(intakeSub, shooterSub);
+  private final IntakeRunBoth intakeBoth = new IntakeRunBoth(intakeSub);
+  private final IntakeRunBottom intakeBottom = new IntakeRunBottom(intakeSub);
+  private final ShootCMD shoot = new ShootCMD(shooterSub);
   private final ArcadeDriveCMD arcadeDrive = new ArcadeDriveCMD(driveSub);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -52,10 +53,14 @@ public class RobotContainer {
   // Default command: this command is called by default
    CommandScheduler.getInstance().setDefaultCommand(driveSub, arcadeDrive);
 
-   Constants.OperatorConstants.button2.whileTrue(spitBalls);
-   Constants.OperatorConstants.button3.whileTrue(swallowBalls);
-   Constants.OperatorConstants.button1.whileTrue(ripOutBalls);
-
+   Constants.OperatorConstants.button2Aux.whileTrue(ejectCargo);
+   Constants.OperatorConstants.button3Aux.whileTrue(intakeBottom);
+   Constants.OperatorConstants.button4Aux.whileTrue(shoot);
+  
+   // Extends the arms
+   Constants.OperatorConstants.povButtonUp.whileTrue(climb);
+   // Retracts the arms
+   Constants.OperatorConstants.povButtonDown.whileTrue(pull);
   }
 
   /**
