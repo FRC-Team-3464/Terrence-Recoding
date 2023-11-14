@@ -44,7 +44,14 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   // Create the fuction to enable arcade drive. 
   public void arcadeDrive(double speed, double rotation) {
-    drive.arcadeDrive(speed, rotation);
+    // When we driving forward
+    if (speed < 0){ 
+      drive.arcadeDrive(speed, rotation);
+    }else{
+      drive.arcadeDrive(speed, -rotation);
+    }
+
+
   }
 
   public void stopMotors() {
