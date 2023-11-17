@@ -4,23 +4,18 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.IntakeSubsystem;
 
-/** An example command that uses an example subsystem. */
-public class ExampleCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ExampleSubsystem m_subsystem;
+public class BallSwallowerCMD extends CommandBase {
+  /** Creates a new BallSwallower. */
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public ExampleCommand(ExampleSubsystem subsystem) {
-    m_subsystem = subsystem;
+  private IntakeSubsystem intakeSub;
+
+  public BallSwallowerCMD(IntakeSubsystem intakeSub) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+ this.intakeSub = intakeSub;
+ addRequirements(intakeSub);
   }
 
   // Called when the command is initially scheduled.
@@ -29,11 +24,15 @@ public class ExampleCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    intakeSub.runIntakes();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    intakeSub.stopIntakes(); 
+  }
 
   // Returns true when the command should end.
   @Override
