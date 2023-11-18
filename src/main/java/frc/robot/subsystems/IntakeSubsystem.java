@@ -17,17 +17,17 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {}
 
   public void runIntakeBottom() {
-    lowerMotor.set(-0.654);
+    lowerMotor.set(0.654);
   }
 
   public void runIntakes() {
-    upperMotor.set(-0.54);
-    lowerMotor.set(-0.65);
+    upperMotor.set(0.34);
+    lowerMotor.set(0.592);
   }
 
   public void spitOutBalls() {
-    upperMotor.set(0.58);
-    lowerMotor.set(0.54);
+    upperMotor.set(-0.58);
+    lowerMotor.set(-0.54);
   }
 
   public void stopIntakes() {

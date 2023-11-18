@@ -5,15 +5,19 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.BallSpitterCMD;
-import frc.robot.commands.BallSwallowerCMD;
-import frc.robot.commands.ClimberMoveCMD;
-import frc.robot.commands.RunBottomIntakeCMD;
+import frc.robot.commands.ArcadeDriveCMD;
+import frc.robot.commands.IntakeRunBottom;
+import frc.robot.commands.IntakeRunBoth;
+import frc.robot.commands.ClimberRunUpDown;
+import frc.robot.commands.IntakeEject;
+import frc.robot.commands.IntakeRunBottom;
 import frc.robot.commands.ShootCMD;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -24,15 +28,20 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  // Creates all our subsystem that the robot will be using.
   private final ClimberSubsystem climberSub = new ClimberSubsystem();
   private final IntakeSubsystem intakeSub = new IntakeSubsystem();
   private final ShooterSubsystem shooterSub = new ShooterSubsystem(); 
-  private final ClimberMoveCMD pull = new ClimberMoveCMD(false);  
-  private final ClimberMoveCMD climb = new ClimberMoveCMD(true);
-  private final BallSpitterCMD spitBalls = new BallSpitterCMD(intakeSub, shooterSub);
-  private final BallSwallowerCMD swallowBalls = new BallSwallowerCMD(intakeSub);
-  private final RunBottomIntakeCMD runBottom = new RunBottomIntakeCMD(intakeSub);
-  private final ShootCMD ripOutBalls = new ShootCMD(shooterSub, intakeSub);
+  private final DriveTrainSubsystem driveSub = new DriveTrainSubsystem();
+
+  // Creates all the commands that use the subsystems to do their functions. 
+  private final ClimberRunUpDown pull = new ClimberRunUpDown(false, climberSub);  
+  private final ClimberRunUpDown climb = new ClimberRunUpDown(true, climberSub);
+  private final IntakeEject ejectCargo = new IntakeEject(intakeSub, shooterSub);
+  private final IntakeRunBoth intakeBoth = new IntakeRunBoth(intakeSub);
+  private final IntakeRunBottom intakeBottom = new IntakeRunBottom(intakeSub);
+  private final ShootCMD shoot = new ShootCMD(shooterSub);
+  private final ArcadeDriveCMD arcadeDrive = new ArcadeDriveCMD(driveSub);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -40,28 +49,18 @@ public class RobotContainer {
     configureBindings();
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    // Constants.OperatorConstants.povUp.whileTrue(climb);
-    // Constants.OperatorConstants.povDown.whileTrue(pull);
+  // Default command: this command is called by default
+   CommandScheduler.getInstance().setDefaultCommand(driveSub, arcadeDrive);
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-
-   Constants.OperatorConstants.button2.whileTrue(spitBalls);
-   Constants.OperatorConstants.button3.whileTrue(swallowBalls);
-   Constants.OperatorConstants.button1.whileTrue(ripOutBalls);
-
-
+   Constants.OperatorConstants.button2Aux.whileTrue(ejectCargo);
+   Constants.OperatorConstants.button3Aux.whileTrue(intakeBottom);
+   Constants.OperatorConstants.button4Aux.whileTrue(shoot);
+  
+   // Extends the arms
+   Constants.OperatorConstants.povButtonUp.whileTrue(climb);
+   // Retracts the arms
+   Constants.OperatorConstants.povButtonDown.whileTrue(pull);
   }
 
   /**

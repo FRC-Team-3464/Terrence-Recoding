@@ -8,16 +8,18 @@ import frc.robot.subsystems.ClimberSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class ClimberMoveCMD extends CommandBase {
+public class ClimberRunUpDown extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
  
-private ClimberSubsystem climberSub;
-   //get our instance of climberSub 
+  private ClimberSubsystem climberSub;
   private boolean climberDirection;
 
-  public ClimberMoveCMD(Boolean direction) {
+  public ClimberRunUpDown(Boolean direction, ClimberSubsystem climberSub) {
+    this.climberSub = climberSub;
     climberDirection = direction;
+    
+    addRequirements(climberSub);
   }
 
   // Called when the command is initially scheduled.
@@ -36,7 +38,9 @@ private ClimberSubsystem climberSub;
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    climberSub.stopMotor();
+  }
 
   // Returns true when the command should end.
   @Override
