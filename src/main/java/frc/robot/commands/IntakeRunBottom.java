@@ -7,12 +7,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class RunBottomIntakeCMD extends CommandBase {
+public class IntakeRunBottom extends CommandBase {
   /** Creates a new RunBottomIntakeCMD. */
 
   private IntakeSubsystem intakeSub;
 
-  public RunBottomIntakeCMD(IntakeSubsystem intakeSub) {
+  public IntakeRunBottom(IntakeSubsystem intakeSub) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSub = intakeSub;
     addRequirements(intakeSub);

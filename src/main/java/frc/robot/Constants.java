@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import java.lang.ModuleLayer.Controller;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
@@ -17,13 +20,45 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static class OperatorConstants {
-    public static final Joystick auxJoystick = new Joystick(0);
-    public static final JoystickButton button1 = new JoystickButton (auxJoystick, 1);
-    public static final POVButton povUp = new POVButton(auxJoystick, 0);
-    public static final POVButton povDown = new POVButton(auxJoystick, 180);
-    public static final JoystickButton button2 = new JoystickButton(auxJoystick, 2);
-    public static final JoystickButton button3 = new JoystickButton(auxJoystick,3);
+  public static class OperatorConstants {    
+    public static final XboxController xboxController = new XboxController(3);
+    //declaring joysticks to be used
+    public static Joystick
+      auxStick =  new Joystick(2),
+      controller = new Joystick(3);
+
     
+    public static JoystickButton 
+      triggerAux = new JoystickButton(auxStick, 1),
+
+      button2Aux = new JoystickButton(auxStick, 2),
+      button3Aux = new JoystickButton(auxStick, 3), 
+      button4Aux = new JoystickButton(auxStick, 4), 
+      button5Aux = new JoystickButton(auxStick, 5), 
+      button6Aux = new JoystickButton(auxStick, 6),
+      button7Aux = new JoystickButton(auxStick, 7), 
+      button8Aux = new JoystickButton(auxStick, 8), 
+      button9Aux = new JoystickButton(auxStick, 9),
+      button10Aux = new JoystickButton(auxStick, 10),
+      button11Aux = new JoystickButton(auxStick, 11), 
+      button12Aux = new JoystickButton(auxStick, 12),
+
+      //buttons for Xbox controller
+      buttonA = new JoystickButton(controller, 1),  
+      buttonB = new JoystickButton(controller, 2),
+      buttonX = new JoystickButton(controller, 3), 
+      buttonY = new JoystickButton(controller, 4), 
+      buttonLB = new JoystickButton(controller, 5), 
+      buttonRB = new JoystickButton(controller, 6), 
+      buttonBox = new JoystickButton(controller, 7),
+      buttonPancake = new JoystickButton(controller, 8);
+    
+    public static POVButton
+      povButtonUp = new POVButton(auxStick, 0),
+      povButtonRight = new POVButton(auxStick, 90),
+      povButtonDown = new POVButton(auxStick, 180),
+      povButtonLeft = new POVButton(auxStick, 270);
+      
   }
 }
+
