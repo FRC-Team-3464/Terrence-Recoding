@@ -11,8 +11,8 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
 
   // Define the sparks
-  private final Spark upperMotor = new Spark(0);
-  private final Spark lowerMotor = new Spark(1);
+  private final Spark lowerMotor = new Spark(0);
+  private final Spark upperMotor = new Spark(1);
 
   public IntakeSubsystem() {}
 
