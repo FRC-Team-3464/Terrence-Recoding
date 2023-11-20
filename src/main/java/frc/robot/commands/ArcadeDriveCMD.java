@@ -4,18 +4,23 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.Constants;
+import frc.robot.subsystems.DriveTrainSubsystem;
 
-public class BallSwallowerCMD extends CommandBase {
-  /** Creates a new BallSwallower. */
+public class ArcadeDriveCMD extends CommandBase {
+  /** Creates a new ArcadeDriveCMD. */
 
-  private IntakeSubsystem intakeSub;
+  // Create drivesystem object
+  private final DriveTrainSubsystem driveSub;
+  private final XboxController controller = Constants.OperatorConstants.xboxController;
 
-  public BallSwallowerCMD(IntakeSubsystem intakeSub) {
-    // Use addRequirements() here to declare subsystem dependencies.
- this.intakeSub = intakeSub;
- addRequirements(intakeSub);
+
+  public ArcadeDriveCMD(DriveTrainSubsystem drive) {
+    // AddRequirements allows us to pass the drivetrain subsystem around different commands. 
+    driveSub = drive;
+    addRequirements(driveSub);
   }
 
   // Called when the command is initially scheduled.
@@ -25,13 +30,13 @@ public class BallSwallowerCMD extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSub.runIntakes();
+    driveSub.arcadeDrive(controller.getLeftY()*.69, controller.getRightX()*.69);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeSub.stopIntakes(); 
+    driveSub.stopMotors();
   }
 
   // Returns true when the command should end.

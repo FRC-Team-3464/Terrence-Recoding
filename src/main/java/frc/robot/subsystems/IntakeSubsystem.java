@@ -11,23 +11,23 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
 
   // Define the sparks
-  private final Spark upperMotor = new Spark(0);
-  private final Spark lowerMotor = new Spark(1);
+  private final Spark lowerMotor = new Spark(0);
+  private final Spark upperMotor = new Spark(1);
 
   public IntakeSubsystem() {}
 
   public void runIntakeBottom() {
-    lowerMotor.set(-0.654);
+    lowerMotor.set(0.654);
   }
 
   public void runIntakes() {
-    upperMotor.set(-0.54);
-    lowerMotor.set(-0.65);
+    upperMotor.set(0.34);
+    lowerMotor.set(0.592);
   }
 
   public void spitOutBalls() {
-    upperMotor.set(0.58);
-    lowerMotor.set(0.54);
+    upperMotor.set(-0.58);
+    lowerMotor.set(-0.54);
   }
 
   public void stopIntakes() {

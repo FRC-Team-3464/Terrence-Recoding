@@ -45,6 +45,9 @@ public boolean topSwitchState(){
   return topLimitSwitch.get();
 } 
 
+public void stopMotor(){
+  elevatorMotor.stopMotor();
+}
 
   // Function returns the climberSubsystem instance
   // public static ClimberSubsystem getInstance(){
