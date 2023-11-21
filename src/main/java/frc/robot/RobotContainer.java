@@ -40,7 +40,7 @@ public class RobotContainer {
   private final IntakeEject ejectCargo = new IntakeEject(intakeSub, shooterSub);
   private final IntakeRunBoth intakeBoth = new IntakeRunBoth(intakeSub);
   private final IntakeRunBottom intakeBottom = new IntakeRunBottom(intakeSub);
-  private final ShootCMD shoot = new ShootCMD(shooterSub);
+  private final ShootCMD shoot = new ShootCMD(shooterSub, intakeSub);
   private final ArcadeDriveCMD arcadeDrive = new ArcadeDriveCMD(driveSub);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -53,9 +53,10 @@ public class RobotContainer {
   // Default command: this command is called by default
    CommandScheduler.getInstance().setDefaultCommand(driveSub, arcadeDrive);
 
+   Constants.OperatorConstants.triggerAux.onTrue(shoot);
    Constants.OperatorConstants.button2Aux.whileTrue(ejectCargo);
    Constants.OperatorConstants.button3Aux.whileTrue(intakeBottom);
-   Constants.OperatorConstants.button4Aux.whileTrue(shoot);
+   Constants.OperatorConstants.button5Aux.whileTrue(intakeBoth);
   
    // Extends the arms
    Constants.OperatorConstants.povButtonUp.whileTrue(climb);

@@ -41,6 +41,7 @@ private final ShooterSubsystem shooterSub;
   @Override
   public void end(boolean interrupted) {
     intakeSub.stopIntakes();
+    shooterSub.stopFlywheel();
   }
 
   // Returns true when the command should end.
