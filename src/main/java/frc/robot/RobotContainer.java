@@ -5,10 +5,19 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.commands.ArcadeDriveCMD;
+import frc.robot.commands.IntakeRunBottom;
+import frc.robot.commands.IntakeRunBoth;
+import frc.robot.commands.ClimberRunUpDown;
+import frc.robot.commands.IntakeEject;
+import frc.robot.commands.IntakeRunBottom;
+import frc.robot.commands.ShootCMD;
+import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -19,12 +28,20 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  // Creates all our subsystem that the robot will be using.
+  private final ClimberSubsystem climberSub = new ClimberSubsystem();
+  private final IntakeSubsystem intakeSub = new IntakeSubsystem();
+  private final ShooterSubsystem shooterSub = new ShooterSubsystem(); 
+  private final DriveTrainSubsystem driveSub = new DriveTrainSubsystem();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  // Creates all the commands that use the subsystems to do their functions. 
+  private final ClimberRunUpDown pull = new ClimberRunUpDown(false, climberSub);  
+  private final ClimberRunUpDown climb = new ClimberRunUpDown(true, climberSub);
+  private final IntakeEject ejectCargo = new IntakeEject(intakeSub, shooterSub);
+  private final IntakeRunBoth intakeBoth = new IntakeRunBoth(intakeSub);
+  private final IntakeRunBottom intakeBottom = new IntakeRunBottom(intakeSub);
+  private final ShootCMD shoot = new ShootCMD(shooterSub, intakeSub);
+  private final ArcadeDriveCMD arcadeDrive = new ArcadeDriveCMD(driveSub);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -32,23 +49,19 @@ public class RobotContainer {
     configureBindings();
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+  // Default command: this command is called by default
+   CommandScheduler.getInstance().setDefaultCommand(driveSub, arcadeDrive);
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+   Constants.OperatorConstants.triggerAux.onTrue(shoot);
+   Constants.OperatorConstants.button2Aux.whileTrue(ejectCargo);
+   Constants.OperatorConstants.button3Aux.whileTrue(intakeBottom);
+   Constants.OperatorConstants.button5Aux.whileTrue(intakeBoth);
+  
+   // Extends the arms
+   Constants.OperatorConstants.povButtonUp.whileTrue(climb);
+   // Retracts the arms
+   Constants.OperatorConstants.povButtonDown.whileTrue(pull);
   }
 
   /**
@@ -58,6 +71,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return null;
   }
 }
